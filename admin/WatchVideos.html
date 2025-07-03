@@ -26,6 +26,8 @@
     const videoForm = document.getElementById('videoForm');
     const videoList = document.getElementById('videoList');
 
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     function extractYouTubeID(url) {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
@@ -33,7 +35,7 @@
     }
 
     async function loadVideos() {
-      const res = await fetch('http://localhost:5000/api/watch-video');
+      const res = await fetch(`${BASE_URL}/api/watch-video`);
       const data = await res.json();
       videoList.innerHTML = '';
       data.forEach(item => {
@@ -55,7 +57,7 @@
       const content = document.getElementById('content').value;
       const youtubeLink = document.getElementById('youtubeLink').value;
 
-      const res = await fetch('http://localhost:5000/api/watch-video', {
+      const res = await fetch(`${BASE_URL}/api/watch-video`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ heading, content, youtubeLink })
@@ -71,7 +73,7 @@
     });
 
     async function deleteVideo(id) {
-      const res = await fetch(`http://localhost:5000/api/watch-video/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/watch-video/${id}`, {
         method: 'DELETE'
       });
 

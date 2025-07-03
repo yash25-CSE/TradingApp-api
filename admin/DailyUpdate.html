@@ -27,9 +27,12 @@
     const form = document.getElementById('updateForm');
     const updateList = document.getElementById('updateList');
 
+
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     // Load daily updates
     async function loadUpdates() {
-      const res = await fetch('http://localhost:5000/api/daily-update');
+      const res = await fetch(`${BASE_URL}/api/daily-update`);
       const data = await res.json();
       updateList.innerHTML = '';
       data.forEach(entry => {
@@ -49,7 +52,7 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      const res = await fetch('http://localhost:5000/api/daily-update', {
+      const res = await fetch(`${BASE_URL}/api/daily-update`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -63,7 +66,7 @@
 
     // Delete update
     async function deleteUpdate(id) {
-      const res = await fetch(`http://localhost:5000/api/daily-update/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/daily-update/${id}`, {
         method: 'DELETE'
       });
 

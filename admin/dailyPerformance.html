@@ -60,12 +60,17 @@
     const form = document.getElementById('performanceForm');
     const container = document.getElementById('entriesContainer');
 
+
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     // Submit new entry
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
 
-      const res = await fetch('http://localhost:5000/api/daily-performance', {
+      const BASE_URL = 'https://trading-app-api.onrender.com';
+
+      const res = await fetch(`${BASE_URL}/api/daily-performance`, {
         method: 'POST',
         body: formData
       });
@@ -82,7 +87,7 @@
     // Delete function
     async function deleteEntry(id) {
       if (confirm('Are you sure you want to delete this entry?')) {
-        const res = await fetch(`http://localhost:5000/api/daily-performance/${id}`, {
+        const res = await fetch(`${BASE_URL}/api/daily-performance/${id}`, {
           method: 'DELETE'
         });
 
@@ -98,7 +103,7 @@
     // Fetch all entries
     async function fetchEntries() {
       try {
-        const res = await fetch('http://localhost:5000/api/daily-performance');
+        const res = await fetch(`${BASE_URL}/api/daily-performance`);
         const data = await res.json();
 
         container.innerHTML = '';
@@ -107,7 +112,7 @@
             <div class="entry">
               <h3>${item.heading}</h3>
               <p>${item.content}</p>
-              <img src="http://localhost:5000${item.imageUrl}" alt="Performance Image">
+              <img src="${BASE_URL}${item.imageUrl}" alt="Performance Image">
               <br><small>${new Date(item.date).toLocaleString()}</small>
               <br><button class="delete-btn" onclick="deleteEntry('${item._id}')">Delete</button>
             </div>

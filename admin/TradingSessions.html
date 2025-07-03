@@ -25,6 +25,8 @@
     const form = document.getElementById('sessionForm');
     const sessionList = document.getElementById('sessionList');
 
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     // Utility to extract YouTube ID
     function extractYouTubeID(url) {
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -34,7 +36,7 @@
 
     // Fetch and show all sessions
     async function loadSessions() {
-      const res = await fetch('http://localhost:5000/api/trading-sessions');
+      const res = await fetch(`${BASE_URL}/api/trading-sessions`);
       const data = await res.json();
       sessionList.innerHTML = '';
       data.forEach(item => {
@@ -55,7 +57,7 @@
       const videoLink = document.getElementById('videoLink').value;
       const content = document.getElementById('content').value;
 
-      const res = await fetch('http://localhost:5000/api/trading-sessions', {
+      const res = await fetch(`${BASE_URL}/api/trading-sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ videoLink, content })
@@ -72,7 +74,7 @@
 
     // Delete session
     async function deleteSession(id) {
-      const res = await fetch(`http://localhost:5000/api/trading-sessions/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/trading-sessions/${id}`, {
         method: 'DELETE'
       });
 

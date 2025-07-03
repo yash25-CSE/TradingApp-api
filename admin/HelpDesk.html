@@ -20,6 +20,8 @@
     const form = document.getElementById('helpForm');
     const list = document.getElementById('helpList');
 
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
@@ -30,7 +32,7 @@
         phone: formData.get('phone')
       };
 
-      const res = await fetch('http://localhost:5000/api/help-desk', {
+      const res = await fetch(`${BASE_URL}/api/help-desk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -46,7 +48,7 @@
     });
 
     async function loadHelpDesk() {
-      const res = await fetch('http://localhost:5000/api/help-desk');
+      const res = await fetch(`${BASE_URL}/api/help-desk`);
       const data = await res.json();
 
       list.innerHTML = '';
@@ -67,7 +69,7 @@
       const confirmDelete = confirm("Are you sure you want to delete this contact?");
       if (!confirmDelete) return;
 
-      const res = await fetch(`http://localhost:5000/api/help-desk/${id}`, {
+      const res = await fetch(`${BASE_URL}/api/help-desk/${id}`, {
         method: 'DELETE'
       });
 

@@ -16,6 +16,7 @@ const upload = multer({ storage });
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { heading, content } = req.body;
+    
     const imageUrl = `/uploads/${req.file.filename}`;
     const newEntry = new AboutTrade({ heading, content, imageUrl });
     await newEntry.save();

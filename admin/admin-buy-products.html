@@ -12,7 +12,7 @@
 </head>
 <body>
   <h2>Upload New Product</h2>
-  <form id="productForm">
+  <form id="productForm"  enctype="multipart/form-data">
     <input type="text" id="heading" placeholder="Heading" required><br><br>
     <input type="number" id="price" placeholder="Price" required><br><br>
     <textarea id="content" placeholder="Content" required></textarea><br><br>
@@ -26,9 +26,11 @@
     const form = document.getElementById('productForm');
     const productList = document.getElementById('productList');
 
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
     // Fetch and show all products
     async function fetchProducts() {
-      const res = await fetch('http://localhost:5000/api/buy-product');
+      const res = await fetch(`${BASE_URL}/api/buy-product`);
       const data = await res.json();
       productList.innerHTML = '';
       data.forEach(item => {
@@ -52,7 +54,7 @@
       const price = document.getElementById('price').value;
       const content = document.getElementById('content').value;
 
-      await fetch('http://localhost:5000/api/buy-product', {
+      await fetch(`${BASE_URL}/api/buy-product`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ heading, price, content })
@@ -64,7 +66,7 @@
 
     // Delete product
     async function deleteProduct(id) {
-      await fetch(`http://localhost:5000/api/buy-product/${id}`, {
+      await fetch(`${BASE_URL}/api/buy-product/${id}`, {
         method: 'DELETE'
       });
       fetchProducts();

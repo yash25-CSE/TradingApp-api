@@ -53,13 +53,17 @@
   <div id="entryList"></div>
 
   <script>
+
+    const BASE_URL = 'https://trading-app-api.onrender.com';
+
+
     const form = document.getElementById('aboutTradeForm');
     const entryList = document.getElementById('entryList');
 
     // Load all entries
     async function loadEntries() {
       try {
-        const res = await fetch('http://localhost:5000/api/about-trade');
+        const res = await fetch(`${BASE_URL}/api/about-trade`);
         const data = await res.json();
         entryList.innerHTML = '';
 
@@ -70,7 +74,7 @@
           div.innerHTML = `
             <h3>${entry.heading}</h3>
             <p>${entry.content}</p>
-            <img src="http://localhost:5000/uploads/${entry.image}" alt="${entry.heading}">
+            <img src="${BASE_URL}/uploads/${entry.image}" alt="${entry.heading}">
             <button class="delete-btn" data-id="${entry._id}">Delete</button>
           `;
 
@@ -87,7 +91,7 @@
       const formData = new FormData(this);
 
       try {
-        const res = await fetch('http://localhost:5000/api/about-trade', {
+        const res = await fetch(`${BASE_URL}/api/about-trade`, {
           method: 'POST',
           body: formData
         });
@@ -108,7 +112,7 @@
         const id = e.target.getAttribute('data-id');
         if (confirm('Are you sure you want to delete this entry?')) {
           try {
-            const res = await fetch(`http://localhost:5000/api/about-trade/${id}`, {
+            const res = await fetch(`${BASE_URL}/api/about-trade/${id}`, {
               method: 'DELETE'
             });
 

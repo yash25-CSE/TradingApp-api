@@ -1,0 +1,15 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/softtec6/rscapital.soft2technologies.com"
+PassengerBaseURI "/"
+PassengerNodejs "/home/softtec6/nodevenv/rscapital.soft2technologies.com/19/bin/node"
+PassengerAppType node
+PassengerStartupFile app.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+SetEnv RAZORPAY_KEY_ID rzp_live_8Ym1xwxufB3O4I
+SetEnv RAZORPAY_KEY_SECRET VoG2oZ8jjVhRXqvYR9fULsRo
+SetEnv GOOGLE_APPLICATION_CREDENTIALS ./serviceAccountKey.json
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END

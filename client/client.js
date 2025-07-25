@@ -1,6 +1,9 @@
+const BASE_URL = 'https://trading-app-api.onrender.com';
+
+
 async function fetchAboutTrade() {
   try {
-    const res = await fetch('http://localhost:5000/api/about-trade');
+    const res = await fetch(`${BASE_URL}/api/about-trade`);
     const data = await res.json();
 
     const contentDiv = document.getElementById('about-trade');
@@ -10,7 +13,7 @@ async function fetchAboutTrade() {
       const div = document.createElement('div');
       div.className = 'entry';
       div.innerHTML = `
-        <img src="http://localhost:5000${item.imageUrl}" alt="Image" />
+        <img src="${BASE_URL}${item.imageUrl}" alt="Image" />
         <h3>${item.heading}</h3>
         <p>${item.content}</p>
         <small>${new Date(item.date).toLocaleString()}</small>
@@ -28,7 +31,7 @@ async function fetchAboutTrade() {
 
 
 async function fetchData() {
-  const res = await fetch('http://localhost:5000/api/daily-performance');
+  const res = await fetch(`${BASE_URL}/api/daily-performance`);
   const data = await res.json();
 
   const contentDiv = document.getElementById('content');
@@ -38,7 +41,7 @@ async function fetchData() {
     const div = document.createElement('div');
     div.className = 'entry';
     div.innerHTML = `
-      <img src="http://localhost:5000${item.imageUrl}" alt="Image" />
+      <img src="${BASE_URL}${item.imageUrl}" alt="Image" />
       <h3>${item.heading}</h3>
       <p>${item.content}</p>
       <p><strong>Date:</strong> ${new Date(item.date).toLocaleString()}</p>
@@ -52,7 +55,7 @@ async function deleteEntry(id) {
   const confirmed = confirm("Are you sure you want to delete this entry?");
   if (!confirmed) return;
 
-  const res = await fetch(`http://localhost:5000/api/daily-performance/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/daily-performance/${id}`, {
     method: 'DELETE',
   });
 
@@ -65,7 +68,7 @@ async function deleteEntry(id) {
 }
 
 async function fetchDailyUpdates() {
-  const res = await fetch('http://localhost:5000/api/daily-update');
+  const res = await fetch(`${BASE_URL}/api/daily-update`);
   const data = await res.json();
 
   const contentDiv = document.getElementById('daily-updates');
@@ -84,7 +87,7 @@ async function fetchDailyUpdates() {
 
 
 async function fetchWatchVideos() {
-  const res = await fetch('http://localhost:5000/api/watch-video');
+  const res = await fetch(`${BASE_URL}/api/watch-video`);
   const data = await res.json();
 
   const contentDiv = document.getElementById('watch-videos');
@@ -117,7 +120,7 @@ async function deleteAboutTrade(id) {
   const confirmed = confirm("Are you sure you want to delete this About Trade entry?");
   if (!confirmed) return;
 
-  const res = await fetch(`http://localhost:5000/api/about-trade/${id}`, {
+  const res = await fetch(`${BASE_URL}/api/about-trade/${id}`, {
     method: 'DELETE',
   });
 
@@ -132,7 +135,7 @@ async function deleteAboutTrade(id) {
 
 async function fetchBuyProducts() {
   try {
-    const res = await fetch('http://localhost:5000/api/buy-product');
+    const res = await fetch(`${BASE_URL}/api/buy-product`);
     const data = await res.json();
 
     const container = document.getElementById('buy-products');
@@ -156,7 +159,7 @@ async function fetchBuyProducts() {
 
 
 async function fetchTradingSessions() {
-  const res = await fetch('http://localhost:5000/api/trading-sessions');
+  const res = await fetch(`${BASE_URL}/api/trading-sessions`);
   const data = await res.json();
   
   const container = document.getElementById('trading-sessions');
@@ -186,7 +189,7 @@ function extractYouTubeID(url) {
 
 
 async function fetchChartPatterns() {
-  const res = await fetch('http://localhost:5000/api/chart-patterns');
+  const res = await fetch(`${BASE_URL}/api/chart-patterns`);
   const data = await res.json();
   const container = document.getElementById('chart-patterns');
   
@@ -196,7 +199,7 @@ async function fetchChartPatterns() {
       <div style="margin: 20px; padding: 10px; border: 1px solid #ccc;">
         <h3>${item.heading}</h3>
         <p>${item.content}</p>
-        <img src="http://localhost:5000${item.imageUrl}" width="300"><br>
+        <img src="${BASE_URL}${item.imageUrl}" width="300"><br>
         <small>${new Date(item.date).toLocaleString()}</small>
       </div>
     `;
@@ -209,7 +212,7 @@ async function fetchTradingMaterials() {
   container.innerHTML = 'Loading...';
 
   try {
-    const res = await fetch('http://localhost:5000/api/trading-materials');
+    const res = await fetch(`${BASE_URL}/api/trading-materials`);
     const data = await res.json();
 
     if (!Array.isArray(data)) {
@@ -223,7 +226,7 @@ async function fetchTradingMaterials() {
         <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
           <h3>${item.title}</h3>
           <p>${item.description}</p>
-          <a href="http://localhost:5000${item.fileUrl}" target="_blank">Download PDF</a><br>
+          <a href="${BASE_URL}${item.fileUrl}" target="_blank">Download PDF</a><br>
           <small>Uploaded on: ${new Date(item.date).toLocaleString()}</small>
         </div>
       `;
@@ -241,7 +244,7 @@ async function fetchHelpDesk() {
   container.innerHTML = 'Loading...';
 
   try {
-    const res = await fetch('http://localhost:5000/api/help-desk');
+    const res = await fetch(`${BASE_URL}/api/help-desk`);
     const data = await res.json();
 
     container.innerHTML = '';
@@ -264,7 +267,7 @@ async function fetchHelpDesk() {
 
 // Fetch Asked Questions (FAQs)
 async function fetchAskedQuestions() {
-  const res = await fetch('http://localhost:5000/api/asked-questions');
+  const res = await fetch(`${BASE_URL}/api/asked-questions`);
   const data = await res.json();
   const container = document.getElementById('asked-questions-list');
 

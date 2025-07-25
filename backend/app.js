@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+
+
 require('dotenv').config();
 
 const app = express();
@@ -11,11 +15,26 @@ const frontendPath = path.join(__dirname, '..', 'admin');
 
 // ✅ Middleware (order matters!)
 app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true })); // Handles form data
 app.use(express.json());                         // Handles JSON data
 
 // ✅ Serve uploaded images publicly
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// payment And Send Notification routes api
+
+const paymentRoutes = require('./routes/paymentRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+
+app.use('/api/payment', paymentRoutes);
+app.use('/api/notification', notificationRoutes);
+
+
+
+
 
 // ✅ Routes
 const dailyPerformanceRoutes = require('./routes/dailyPerformance');

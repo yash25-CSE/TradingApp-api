@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Verify Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 40px;
+    }
+    .panel {
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .success, .error {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      display: none;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+
+  <div class="panel">
+    <h2>Verify Razorpay Payment</h2>
+    <input type="text" id="razorpay_order_id" placeholder="Razorpay Order ID" required />
+    <input type="text" id="razorpay_payment_id" placeholder="Razorpay Payment ID" required />
+    <input type="text" id="razorpay_signature" placeholder="Razorpay Signature" required />
+    <button onclick="verifyPayment()">Verify Payment</button>
+
+    <div id="successMsg" class="success"></div>
+    <div id="errorMsg" class="error"></div>
+  </div>
+
+  <script>
+    const BASE_URL = 'https://trading-app-api.onrender.com'; // Change this if testing locally
+
+    async function verifyPayment() {
+      const razorpay_order_id = document.getElementById('razorpay_order_id').value;
+      const razorpay_payment_id = document.getElementById('razorpay_payment_id').value;
+      const razorpay_signature = document.getElementById('razorpay_signature').value;
+
+      try {
+        const response = await fetch(`${BASE_URL}/api/payment/verify`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature })
+        });
+
+        const contentType = response.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+          const text = await response.text(); // Read error response as text
+          throw new Error("Invalid response from server:\n" + text);
+        }
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          document.getElementById('successMsg').innerText = '✅ Payment Verified Successfully';
+          document.getElementById('successMsg').style.display = 'block';
+          document.getElementById('errorMsg').style.display = 'none';
+        } else {
+          document.getElementById('errorMsg').innerText = '❌ Verification Failed: ' + data.message;
+          document.getElementById('errorMsg').style.display = 'block';
+          document.getElementById('successMsg').style.display = 'none';
+        }
+      } catch (err) {
+        document.getElementById('errorMsg').innerText = 'Error: ' + err.message;
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('successMsg').style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
+

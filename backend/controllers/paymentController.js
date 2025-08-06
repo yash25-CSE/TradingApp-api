@@ -30,14 +30,38 @@ const verifyPayment = (req, res) => {
         .update(body.toString())
         .digest("hex");
 
-    if (expectedSignature === razorpay_signature) {
+    if (expectedSignature === razorpay_signature)    {
         return res.status(200).json({ success: true, message: "Payment verified successfully" });
     } else {
         return res.status(400).json({ success: false, message: "Invalid signature" });
     }
 };
 
+
+
+const refundPayment = async (req, res) => {
+    const { payment_id, amount } = req.body; // amount is optional
+
+    try {
+        const refundOptions = {
+            payment_id,
+        };
+
+        if (amount) {
+            refundOptions.amount = amount; // optional for partial refund
+        }
+
+        const refund = await razorpay.payments.refund(refundOptions);
+        res.status(200).json({ success: true, message: "Refund successful", refund });
+    } catch (error) {
+        console.error("Refund error:", error);
+        res.status(500).json({ success: false, message: "Refund failed", error: error.message });
+    }
+};
+
+
 module.exports = {
     createOrder,
-    verifyPayment
+    verifyPayment,
+    refundPayment
 };

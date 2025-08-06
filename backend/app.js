@@ -5,11 +5,16 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
-
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 const frontendPath = path.join(__dirname, '..', 'admin');
+
+
+
+
+
+
 
 
 
@@ -39,6 +44,8 @@ app.use('/api/notification', notificationRoutes);
 // ✅ Routes
 const dailyPerformanceRoutes = require('./routes/dailyPerformance');
 app.use('/api/daily-performance', dailyPerformanceRoutes);
+
+app.use('/api/admin', require('./routes/admin')); // Important fix
 
 app.use('/api/daily-update', require('./routes/dailyUpdate'));
 app.use('/api/about-trade', require('./routes/aboutTrade'));

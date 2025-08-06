@@ -3,6 +3,10 @@ function loadPage(pageName) {
   frame.src = pageName;
 }
 
+  function goToLogout() {
+    window.location.href = "login.html";
+  }
+
 
 
 
